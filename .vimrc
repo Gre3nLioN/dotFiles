@@ -26,6 +26,7 @@ Plugin 'cesardeazevedo/Fx-ColorScheme'
 Plugin 'JulesWang/css.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'scrooloose/nerdtree.git'
+Plugin 'christoomey/vim-tmux-navigator'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
