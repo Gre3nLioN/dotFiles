@@ -27,6 +27,10 @@ Plugin 'JulesWang/css.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'tmux-plugins/vim-tmux-focus-events'
+Plugin 'tmux-plugins/vim-tmux'
+Plugin 'chaoren/vim-wordmotion'
+Plugin 'rking/ag.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -58,7 +62,7 @@ autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 "cutom keys"
 let mapleader=","
 set dir=~/tmp
-set clipboard=unnamedplus
+set clipboard=unnamed
 set mouse=a
 set shiftwidth=4
 set tabstop=4
@@ -86,10 +90,15 @@ xnoremap p pgvy
 " open ag.vim
 nnoremap <leader>a :Ag
 
+" jk is escape
+inoremap jk <esc>
+
 " CtrlP settings
 let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
-
+" search
+let g:ag_working_path_mode="r"
+let g:ackprg = 'ag --nogroup --nocolor --column'
