@@ -27,6 +27,7 @@ Plugin 'JulesWang/css.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'vim-scripts/npm.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -60,8 +61,9 @@ let mapleader=","
 set dir=~/tmp
 set clipboard=unnamedplus
 set mouse=a
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
+set expandtab
 set switchbuf=usetab
 nmap <silent> <Tab> :tabnext<CR>
 nmap <silent> <S-Tab> :tabprev<CR>
