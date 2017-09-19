@@ -27,6 +27,7 @@ Plugin 'JulesWang/css.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'vim-scripts/npm.vim'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'chaoren/vim-wordmotion'
@@ -66,8 +67,9 @@ let mapleader=","
 set dir=~/tmp
 set clipboard=unnamed
 set mouse=a
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
+set expandtab
 set switchbuf=usetab
 nmap <silent> <Tab> :tabnext<CR>
 nmap <silent> <S-Tab> :tabprev<CR>
