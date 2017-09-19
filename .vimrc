@@ -31,6 +31,7 @@ Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'chaoren/vim-wordmotion'
 Plugin 'rking/ag.vim'
+Plugin 'luochen1990/rainbow'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -44,6 +45,7 @@ set background=dark
 colorscheme fx
 autocmd StdinReadPre * let s:std_in=1
 runtime macros/matchit.vim
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 "NERDTree"
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
