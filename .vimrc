@@ -52,6 +52,9 @@ set number
 set relativenumber
 set background=dark
 colorscheme fx
+:hi TabLineFill ctermfg=241 ctermbg=241
+:hi TabLine ctermfg=231 ctermbg=233
+:hi TabLineSel ctermfg=214 ctermbg=172
 autocmd StdinReadPre * let s:std_in=1
 runtime macros/matchit.vim
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
