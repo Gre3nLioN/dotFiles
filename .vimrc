@@ -15,13 +15,13 @@ filetype off     " Required by vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'vimwiki/vimwiki'
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'jiangmiao/auto-pairs'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
 Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-surround'
 Plugin 'maksimr/vim-jsbeautify'
-Plugin 'kien/ctrlp.vim'
 Plugin 'cesardeazevedo/Fx-ColorScheme'
 Plugin 'JulesWang/css.vim'
 Plugin 'cakebaker/scss-syntax.vim'
@@ -32,6 +32,15 @@ Plugin 'tmux-plugins/vim-tmux'
 Plugin 'chaoren/vim-wordmotion'
 Plugin 'rking/ag.vim'
 Plugin 'luochen1990/rainbow'
+Plugin 'tpope/vim-commentary'
+Plugin 'mileszs/ack.vim'
+Plugin 'tpope/vim-repeat'
+Plugin 'docunext/closetag.vim'
+Plugin 'kana/vim-fakeclip'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
+Plugin 'ervandew/supertab'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -43,6 +52,9 @@ set number
 set relativenumber
 set background=dark
 colorscheme fx
+:hi TabLineFill ctermfg=241 ctermbg=241
+:hi TabLine ctermfg=231 ctermbg=233
+:hi TabLineSel ctermfg=214 ctermbg=172
 autocmd StdinReadPre * let s:std_in=1
 runtime macros/matchit.vim
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
@@ -53,22 +65,28 @@ map <F2> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 set noswapfile
 
-"Spark - Emmet"
-let g:sparkupExecuteMapping='<C-E>'
+"
+" Options
+"
+set backspace=2             " in order to delete in insert mode
+set autoindent              " Carry over indenting from previous line
+set cinkeys-=0#             " Comments don't fiddle with indenting
+set copyindent              " Make autoindent use the same chars as prev line
+set encoding=utf8           " UTF-8 by default
+set tabstop=4
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+" On pressing tab, insert 4 spaces
+set expandtab
 
-"JsBeatify"
-autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
-autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
-autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+" Tell ack.vim to use ag (the Silver Searcher) instead
+let g:ackprg = 'ag --vimgrep'
 
 "cutom keys"
 let mapleader=","
 set dir=~/tmp
 set clipboard=unnamed
 set mouse=a
-set shiftwidth=2
-set tabstop=2
-set expandtab
 set switchbuf=usetab
 nmap <silent> <Tab> :tabnext<CR>
 nmap <silent> <S-Tab> :tabprev<CR>
@@ -90,18 +108,22 @@ nnoremap<Leader>m ]`
 nnoremap <Leader>l [`
 xnoremap p pgvy
 
-" open ag.vim
-nnoremap <leader>a :Ag
 
-" jk is escape
-inoremap jk <esc>
+if has('macunix')
+    " pbcopy for OSX copy/paste
+    vmap <C-x> :!pbcopy<CR>
+    vmap <C-c> :w !pbcopy<CR><CR>
+endif
 
-" CtrlP settings
-let g:ctrlp_match_window = 'bottom,order:ttb'
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_add_preview_to_completeopt=0
+let g:ycm_confirm_extra_conf=0
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
 
-" search
-let g:ag_working_path_mode="r"
-let g:ackprg = 'ag --nogroup --nocolor --column'
+" UltiSnips triggering
+let g:UltiSnipsExpandTrigger = '<C-j>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+let g:UltiSnipsEditSplit="vertical"
