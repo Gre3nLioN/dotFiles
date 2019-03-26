@@ -32,14 +32,10 @@ Plugin 'tmux-plugins/vim-tmux'
 Plugin 'chaoren/vim-wordmotion'
 Plugin 'rking/ag.vim'
 Plugin 'luochen1990/rainbow'
-Plugin 'tpope/vim-commentary'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'docunext/closetag.vim'
 Plugin 'kana/vim-fakeclip'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'SirVer/ultisnips'
-Plugin 'ervandew/supertab'
 
 
 " All of your Plugins must be added before the following line
