@@ -1,5 +1,4 @@
 execute pathogen#infect()
-syntax on
 filetype plugin on
 filetype plugin indent on
 runtime macros/matchit.vim
@@ -30,12 +29,22 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'chaoren/vim-wordmotion'
+Plugin 'majutsushi/tagbar'
+Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'rking/ag.vim'
 Plugin 'luochen1990/rainbow'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'docunext/closetag.vim'
 Plugin 'kana/vim-fakeclip'
+Plugin 'xolox/vim-notes'
+Plugin 'xolox/vim-misc'
+"python things
+Plugin 'tmhedberg/SimpylFold'
+"Plugin 'vim-scripts/indentpython.vim'
+"Plugin 'nvie/vim-flake8'
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdcommenter'
 
 
 " All of your Plugins must be added before the following line
@@ -60,20 +69,14 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <F2> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 set noswapfile
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 
-"
-" Options
-"
-set backspace=2             " in order to delete in insert mode
-set autoindent              " Carry over indenting from previous line
-set cinkeys-=0#             " Comments don't fiddle with indenting
-set copyindent              " Make autoindent use the same chars as prev line
-set encoding=utf8           " UTF-8 by default
-set tabstop=4
-" when indenting with '>', use 4 spaces width
-set shiftwidth=4
-" On pressing tab, insert 4 spaces
-set expandtab
+" Comments
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
 
 " Tell ack.vim to use ag (the Silver Searcher) instead
 let g:ackprg = 'ag --vimgrep'
@@ -86,6 +89,7 @@ set mouse=a
 set switchbuf=usetab
 nmap <silent> <Tab> :tabnext<CR>
 nmap <silent> <S-Tab> :tabprev<CR>
+nmap <F8> :TagbarToggle<CR>
 nnoremap <silent> <F12> :qa <CR>
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-w> <Esc>:tabclose<CR>
@@ -97,6 +101,8 @@ nnoremap <C-l> <C-w><Right>
 nnoremap <C-h> <C-w><Left>
 nnoremap <silent> <Leader>+ :exe "10winc >"<CR>
 nnoremap <silent> <Leader>- :exe "10winc <"<CR>
+nnoremap <silent> <Leader>p :exe "%!jq '.'"<CR>
+nnoremap <silent> <Leader>n :RecentNotes<CR>
 nnoremap <Leader>s :w <CR>
 noremap } ;
 noremap ] ,
@@ -111,15 +117,39 @@ if has('macunix')
     vmap <C-c> :w !pbcopy<CR><CR>
 endif
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_add_preview_to_completeopt=0
-let g:ycm_confirm_extra_conf=0
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
 " UltiSnips triggering
-let g:UltiSnipsExpandTrigger = '<C-j>'
-let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsExpandTrigger = '<C-j>'
+"let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+"let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+"let g:UltiSnipsEditSplit="vertical"
+
+" Python things
+autocmd BufNewFile, BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+let python_highlight_all=0
+let g:SimpylFold_docstring_preview=0
+syntax on
+let g:ycm_autoclose_preview_window_after_completion=0
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+"
+" Options
+"
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set autoindent
+set fileformat=unix
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+" Enable folding with the spacebar
+nnoremap <space> za

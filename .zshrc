@@ -55,6 +55,15 @@ plugins=(git archlinux web-search)
 
 export PATH=$HOME/bin:$HOME/npm/bin:/usr/local/bin:$PATH
 export PATH=$PATH:/usr/java-7-openjdk/java
+export PATH=/usr/bin:/usr/sbin:/bin:/sbin
+export PATH=$PATH/bin:~/Documents/matlab/bin/
+source /home/greenlion/Documents/Scale/scaleapi/bin/okta-helpers.bash
+
+# Set up Node Version Manager
+export NVM_DIR="$HOME/.nvm"                            # You can change this if you want.
+export NVM_SOURCE="/usr/share/nvm"                     # The AUR package installs it to here.
+[ -s "$NVM_SOURCE/nvm.sh"  ] && . "$NVM_SOURCE/nvm.sh"  # Load NVM
+unset npm_config_prefix
 
 
 #export PATH=/usr/local/share/npm/bin/:$PATH
@@ -85,11 +94,20 @@ export PATH=$PATH:/usr/java-7-openjdk/java
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias gdb="git branch -vv | grep ': gone]' | awk '{print $1}'"
+alias toScale="cd ~/Documents/Scale/scaleapi/"
+alias vim="nvim"
+alias vi="nvim"
+alias oldvim="vim"
+
 
 ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
 fi
+
+#if [ "$TMUX" = "" ]; then tmux; fi
+
 
 source $ZSH/oh-my-zsh.sh
 
@@ -99,3 +117,7 @@ source $ZSH/oh-my-zsh.sh
 # tabtab source for sls package
 # uninstall by removing these lines or running `tabtab uninstall sls`
 [[ -f /home/greenlion/.node_modules/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /home/greenlion/.node_modules/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
+
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /home/greenlion/Documents/Scale/scaleapi/node_modules/tabtab/.completions/slss.zsh ]] && . /home/greenlion/Documents/Scale/scaleapi/node_modules/tabtab/.completions/slss.zsh
