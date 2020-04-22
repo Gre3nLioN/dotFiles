@@ -1,4 +1,5 @@
 # Path to your oh-my-zsh installation.
+
 ZSH=/usr/share/oh-my-zsh/
 
 # Set name of the theme to load.
@@ -49,15 +50,16 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git archlinux web-search)
+plugins=(git archlinux web-search ssh-agent)
 
 # User configuration
 
 export PATH=$HOME/bin:$HOME/npm/bin:/usr/local/bin:$PATH
 export PATH=$PATH:/usr/java-7-openjdk/java
 export PATH=/usr/bin:/usr/sbin:/bin:/sbin
-export PATH=$PATH/bin:~/Documents/matlab/bin/
-source /home/greenlion/Documents/Scale/scaleapi/bin/okta-helpers.bash
+export PATH=$PATH/bin:~/Documents/matlab/bin
+export PATH=$PATH:$HOME/.local/bin
+source $HOME/Documents/Scale/scaleapi/bin/okta-helpers.bash
 
 # Set up Node Version Manager
 export NVM_DIR="$HOME/.nvm"                            # You can change this if you want.
@@ -121,3 +123,11 @@ source $ZSH/oh-my-zsh.sh
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [[ -f /home/greenlion/Documents/Scale/scaleapi/node_modules/tabtab/.completions/slss.zsh ]] && . /home/greenlion/Documents/Scale/scaleapi/node_modules/tabtab/.completions/slss.zsh
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv virtualenv-init -)"
+eval "$(pyenv virtualenv-init -)"
+eval "$(pyenv init -)"
+
+unset SUDO_UID SUDO_GID SUDO_USER
+

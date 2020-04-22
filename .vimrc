@@ -21,7 +21,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-surround'
 Plugin 'maksimr/vim-jsbeautify'
-Plugin 'cesardeazevedo/Fx-ColorScheme'
+Plugin 'ParamagicDev/vim-medic_chalk'
 Plugin 'JulesWang/css.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'scrooloose/nerdtree.git'
@@ -39,13 +39,15 @@ Plugin 'docunext/closetag.vim'
 Plugin 'kana/vim-fakeclip'
 Plugin 'xolox/vim-notes'
 Plugin 'xolox/vim-misc'
+Plugin 'leafgarland/typescript-vim'
+" Use release branch (Recommend)
+Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 "python things
 Plugin 'tmhedberg/SimpylFold'
 "Plugin 'vim-scripts/indentpython.vim'
-"Plugin 'nvie/vim-flake8'
+Plugin 'nvie/vim-flake8'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
-
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -56,7 +58,7 @@ set t_Co=256
 set number
 set relativenumber
 set background=dark
-colorscheme fx
+colorscheme medic_chalk
 :hi TabLineFill ctermfg=241 ctermbg=241
 :hi TabLine ctermfg=231 ctermbg=233
 :hi TabLineSel ctermfg=214 ctermbg=172
@@ -84,7 +86,7 @@ let g:ackprg = 'ag --vimgrep'
 "cutom keys"
 let mapleader=","
 set dir=~/tmp
-set clipboard=unnamed
+set clipboard+=unnamedplus
 set mouse=a
 set switchbuf=usetab
 nmap <silent> <Tab> :tabnext<CR>
@@ -110,6 +112,8 @@ nnoremap<Leader>m ]`
 nnoremap <Leader>l [`
 xnoremap p pgvy
 
+" custom commands
+command! Dup :syn clear Repeat | g/^\(.*\)\n\ze\%(.*\n\)*\1$/exe 'syn match Repeat "^' . escape(getline('.'), '".\^$*[]') . '$"' | nohlsearch
 
 if has('macunix')
     " pbcopy for OSX copy/paste
@@ -122,6 +126,42 @@ endif
 "let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 "let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 "let g:UltiSnipsEditSplit="vertical"
+
+" coc.nvim config
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+			\ pumvisible() ? "\<C-n>" :
+			\ <SID>check_back_space() ? "\<TAB>" :
+			\ coc#refresh()
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" Better display for messages
+set cmdheight=2
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+" always show signcolumns
+set signcolumn=yes
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+nmap <silent> gd <Plug>(coc-definition)
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+
+
 
 " Python things
 autocmd BufNewFile, BufRead *.py
@@ -153,3 +193,11 @@ set foldmethod=indent
 set foldlevel=99
 " Enable folding with the spacebar
 nnoremap <space> za
+
+" Typescript
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" open ctrlp in MRU
+let g:ctrlp_cmd = 'CtrlPMRU'
+
