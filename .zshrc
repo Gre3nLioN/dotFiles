@@ -130,4 +130,5 @@ eval "$(pyenv virtualenv-init -)"
 eval "$(pyenv init -)"
 
 unset SUDO_UID SUDO_GID SUDO_USER
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
