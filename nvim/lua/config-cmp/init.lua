@@ -26,17 +26,20 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
   sources = cmp.config.sources({
-    { name = 'luasnip', kind = "  " },
-    { name = 'nvim_lsp' },
-    { name = 'nvim_lua' },
-    { name = 'path' },
+    { name = "copilot", group_index = 2 },
+        -- Other Sources
+    { name = "nvim_lsp", group_index = 2 },
+    { name = "path", group_index = 2 },
+    { name = "luasnip", group_index = 2 },
   }, {
     { name = 'buffer', kind = "  " },
   }),
   formatting = {
     format = require("lspkind").cmp_format {
-      with_text = true,
-      menu = {
+      mode = "symbol",
+      max_width = 50,
+      symbol_map = {
+        Copilot = "",
         buffer = "[buf]",
         nvim_lsp = "[LSP]",
         nvim_lua = "[api]",
@@ -44,29 +47,52 @@ cmp.setup({
         luasnip = "[snip]",
         gh_issues = "[issues]",
         tn = "[TabNine]",
-      },
+      }
     },
   },
-})
--- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline('/', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
+  sorting = {
+    priority_weight = 2,
+    comparators = {
+      require("copilot_cmp.comparators").prioritize,
 
--- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+      -- Below is the default comparitor list and order for nvim-cmp
+      cmp.config.compare.offset,
+      -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+      cmp.config.compare.locality,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
+    window = {
+    documentation = cmp.config.window.bordered()
+  },
+})
+vim.api.nvim_set_hl(0, "CmpItemKindCopilot", {fg ="#6CC644"}) -- color for Copilot
+
+-- -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+-- cmp.setup.cmdline('/', {
+--   mapping = cmp.mapping.preset.cmdline(),
+--   sources = {
+--     { name = 'buffer' }
+--   }
+-- })
+-- -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+-- cmp.setup.cmdline(':', {
+--   mapping = cmp.mapping.preset.cmdline(),
+--   sources = cmp.config.sources({
+--     { name = 'path' }
+--   }, {
+--     { name = 'cmdline' }
+--   })
+-- })
+
+-- Set up lspconfig.
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 require('lspconfig')['tsserver'].setup {
   capabilities = capabilities
@@ -83,16 +109,4 @@ require('lspconfig')['cssls'].setup {
 require('lspconfig')['stylelint_lsp'].setup {
   capabilities = capabilities
 }
---
--- nvim-cmp highlight groups.
--- local Group = require("colorbuddy.group").Group
--- local g = require("colorbuddy.group").groups
--- local s = require("colorbuddy.style").styles
---
--- Group.new("CmpItemAbbr", g.Comment)
--- Group.new("CmpItemAbbrDeprecated", g.Error)
--- Group.new("CmpItemAbbrMatchFuzzy", g.CmpItemAbbr.fg:dark(), nil, s.italic)
--- Group.new("CmpItemKind", g.Special)
--- Group.new("CmpItemMenu", g.NonText)
-
 vim.cmd('highlight CmpItemMenu guibg = NONE guifg = #666666')

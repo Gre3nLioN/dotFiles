@@ -19,7 +19,8 @@ api.nvim_set_keymap('n', '<leader>hh', ':set hlsearch!<CR>', opt)
 api.nvim_set_keymap('n', '<leader><Space>', ':noh<CR>', { silent = true })
 
 -- split panes
-api.nvim_set_keymap('n', '<leader>v', ':vs<CR>', opt)
+api.nvim_set_keymap('n', '<leader>wv', ':vs<CR>', opt)
+api.nvim_set_keymap('n', '<leader>wh', ':split<CR>', opt)
 
 -- edit init.lua
 api.nvim_set_keymap('n', '<leader>vi', ':e ~/.config/nvim/init.lua<CR>', opt)
@@ -43,11 +44,11 @@ api.nvim_set_keymap('n', 'sd', '<cmd>lua vim.lsp.buf.definition()<CR>', opt)
 api.nvim_set_keymap('n', 'gT', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opt)
 api.nvim_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opt)
 api.nvim_set_keymap('n', '<leader>df', '<cmd>lua vim.diagnostic.goto_next()<CR>', opt)
-api.nvim_set_keymap('n', '<leader>sf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opt)
-api.nvim_set_keymap('n', '<leader>si', '<cmd>lua vim.lsp.buf.implementation()<CR>', opt)
-api.nvim_set_keymap('n', '<leader>ssh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opt)
-api.nvim_set_keymap('n', '<leader>srr', '<cmd>lua vim.lsp.buf.references()<CR>', opt)
-api.nvim_set_keymap('n', '<leader>srn', '<cmd>lua vim.lsp.buf.rename()<CR>', opt)
+-- api.nvim_set_keymap('n', '<leader>sf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opt)
+-- api.nvim_set_keymap('n', '<leader>si', '<cmd>lua vim.lsp.buf.implementation()<CR>', opt)
+-- api.nvim_set_keymap('n', '<leader>ssh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opt)
+-- api.nvim_set_keymap('n', '<leader>srr', '<cmd>lua vim.lsp.buf.references()<CR>', opt)
+-- api.nvim_set_keymap('n', '<leader>srn', '<cmd>lua vim.lsp.buf.rename()<CR>', opt)
 api.nvim_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opt)
 
 -- Git
@@ -60,13 +61,24 @@ api.nvim_set_keymap('n', '<leader>gd', ':Gvdiff<CR>', { noremap = true })
 -- search will center on the line it's found in
 cmd('nnoremap n nzzzv')
 cmd('nnoremap N Nzzzv')
+cmd('nnoremap N Nzzzv')
+
+
+
+-- custom
+cmd([[xnoremap p pgvy]])
+cmd('nnoremap <space> za')
+cmd('nnoremap <silent> <Leader>p :exe "%!python -m json.tool"<CR>')
+cmd('nnoremap <leader>ai :ChatGPT<CR>')
+cmd('vnoremap <silent> <leader>ai :<C-U>ChatGPTEditWithInstructions<CR>')
+
 
 -- use ; as :
 -- cmd('nnoremap ; :')
 
 -- explorer
-api.nvim_set_keymap('n', '<leader>ne', ':NvimTreeToggle<CR>', opt)
-api.nvim_set_keymap('n', '<leader>nf', ':NvimTreeFindFile<CR>', opt)
+-- api.nvim_set_keymap('n', '<leader>ne', ':NvimTreeToggle<CR>', opt)
+-- api.nvim_set_keymap('n', '<leader>nf', ':NvimTreeFindFile<CR>', opt)
 
 -- better window movement
 api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { silent = true })
@@ -87,6 +99,7 @@ api.nvim_set_keymap('i', 'jj', '<ESC>', opt)
 api.nvim_set_keymap('n', '<TAB>', ':bnext<CR>', opt)
 api.nvim_set_keymap('n', '<S-TAB>', ':bprevious<CR>', opt)
 api.nvim_set_keymap('n', '<leader>c', ':bd<CR>', opt)
+api.nvim_set_keymap('n', '<leader>wc', ':close<CR>', opt)
 
 -- Better nav for omnicomplete
 cmd('inoremap <expr> <c-j> (\"\\<C-n>\")')
@@ -96,14 +109,11 @@ cmd('inoremap <expr> <c-k> (\"\\<C-p>\")')
 api.nvim_set_keymap('n', '<leader>z', "<cmd>lua require('zen-mode').toggle({ window = { width = .50 } })<cr>",
   { silent = true, noremap = true })
 
-
-
-api.nvim_set_keymap('x', '<leader>/',
-  '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', { silent = true, noremap = true })
 -- api.nvim_set_keymap('n', ':q', ':bd<CR>', opt)
 --
 vim.api.nvim_set_keymap("", "<leader>y", '"+y', { silent = true })
 
 
 -- Custom functions
-api.nvim_set_keymap('n', '<leader>f', ":%!python -m json.tool<CR>", { silent = true })
+api.nvim_set_keymap('n', '<leader>f', ":%!python3 -m json.tool<CR>", { silent = true })
+api.nvim_set_keymap('n', '<leader>ft', ":FloatermNew <CR>", { silent = true })

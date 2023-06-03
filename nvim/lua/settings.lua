@@ -15,6 +15,20 @@ cmd('set ts=2')
 cmd('set sw=2')
 cmd('set expandtab')
 
+
+cmd('set clipboard=unnamed')
+cmd('set foldmethod=indent')
+cmd('set foldlevel=99999')
+cmd('set nobackup')
+cmd('set nowritebackup')
+cmd('set noswapfile')
+
+
+cmd('set synmaxcol=2048')
+
+
+
+
 -- colorscheme
 
 cmd("syntax enable")
@@ -73,3 +87,5 @@ cmd([[let g:ackprg = 'rg -S --no-heading --vimgrep']])
 
 cmd([[let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git, node_modules, dist, test, logs -g ""']])
 cmd([[set grepprg=ag\ --nogroup\ --nocolor]])
+
+cmd('set scrolloff=10')
